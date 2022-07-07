@@ -1,14 +1,18 @@
 import 'dart:convert';
-import 'dart:developer';
 
+import 'package:logger/logger.dart';
 import 'package:money_app/data/local_storage/local_storage.dart';
 import 'package:money_app/data/repositories/account_repository.dart';
 import 'package:money_app/domain/models/account_model.dart';
 
 class AccountRepositoryImpl extends AccountRepository {
+  final Logger _logger;
   final LocalStorage _storage;
 
-  AccountRepositoryImpl(this._storage);
+  AccountRepositoryImpl(
+    this._logger,
+    this._storage,
+  );
 
   @override
   Future<AccountModel?> getAccountData() async {
@@ -21,8 +25,9 @@ class AccountRepositoryImpl extends AccountRepository {
         final Map<String, dynamic> locMap = jsonDecode(storageRes);
         res = AccountModel.fromJson(locMap);
       }
-    } catch (e, s) {
-      log(e.toString(), stackTrace: s);
+      _logger.d(res?.toJson());
+    } catch (e) {
+      _logger.d(e);
     }
     return res;
   }
@@ -39,8 +44,8 @@ class AccountRepositoryImpl extends AccountRepository {
         ),
       );
       return account;
-    } catch (e, s) {
-      log(e.toString(), stackTrace: s);
+    } catch (e) {
+      _logger.d(e);
       return null;
     }
   }

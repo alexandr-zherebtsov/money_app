@@ -91,7 +91,7 @@ class PayController extends GetxController {
     final double? v = double.tryParse(price.value);
     final double? e = account?.price;
     if (v != null && e != null) {
-      return account!.price! >= v;
+      return account!.price! >= v && v > 0;
     } else {
       return false;
     }

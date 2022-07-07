@@ -1,16 +1,20 @@
 import 'dart:convert';
-import 'dart:developer';
 
 import 'package:get/get.dart';
+import 'package:logger/logger.dart';
 import 'package:money_app/data/local_storage/local_storage.dart';
 import 'package:money_app/data/repositories/transactions_repository.dart';
 import 'package:money_app/domain/models/account_model.dart';
 import 'package:money_app/domain/models/transaction_model.dart';
 
 class TransactionsRepositoryImpl extends TransactionsRepository {
+  final Logger _logger;
   final LocalStorage _storage;
 
-  TransactionsRepositoryImpl(this._storage);
+  TransactionsRepositoryImpl(
+    this._logger,
+    this._storage,
+  );
 
   @override
   Future<List<TransactionModel>> getTransactions() async {
@@ -21,8 +25,9 @@ class TransactionsRepositoryImpl extends TransactionsRepository {
         res = (jsonDecode(storageRes) as List).map((e) => TransactionModel.fromJson(e)).toList();
         res.sort((i, j) => j.createdAt!.compareTo(i.createdAt!));
       }
-    } catch (e, s) {
-      log(e.toString(), stackTrace: s);
+      _logger.d(jsonDecode(storageRes ?? 'null'));
+    } catch (e) {
+      _logger.d(e);
     }
     return res;
   }
@@ -31,9 +36,11 @@ class TransactionsRepositoryImpl extends TransactionsRepository {
   Future<TransactionModel?> getTransactionById(final String id) async {
     try {
       final List<TransactionModel> storageRes = await getTransactions();
-      return storageRes.firstWhereOrNull((e) => e.transactionId == id);
-    } catch (e, s) {
-      log(e.toString(), stackTrace: s);
+      final TransactionModel? res = storageRes.firstWhereOrNull((e) => e.transactionId == id);
+      _logger.d(storageRes);
+      return res;
+    } catch (e) {
+      _logger.d(e);
       return null;
     }
   }
@@ -54,9 +61,10 @@ class TransactionsRepositoryImpl extends TransactionsRepository {
         _storage.setTransactions(jsonEncode(res)),
         _storage.setAccount(jsonEncode(a.toJson())),
       ]);
+      _logger.d(v.toJson());
       return true;
-    } catch (e, s) {
-      log(e.toString(), stackTrace: s);
+    } catch (e) {
+      _logger.d(e);
       return false;
     }
   }
@@ -71,9 +79,11 @@ class TransactionsRepositoryImpl extends TransactionsRepository {
       for (int i = 0; i < storageRes.length; i++) {
         res.add(storageRes[i].toJson());
       }
+      await _storage.setTransactions(jsonEncode(res));
+      _logger.d(v.toJson());
       return true;
-    } catch (e, s) {
-      log(e.toString(), stackTrace: s);
+    } catch (e) {
+      _logger.d(e);
       return false;
     }
   }
@@ -95,9 +105,10 @@ class TransactionsRepositoryImpl extends TransactionsRepository {
         _storage.setTransactions(jsonEncode(res)),
         _storage.setAccount(jsonEncode(a.toJson())),
       ]);
+      _logger.d(v.toJson());
       return true;
-    } catch (e, s) {
-      log(e.toString(), stackTrace: s);
+    } catch (e) {
+      _logger.d(e);
       return false;
     }
   }

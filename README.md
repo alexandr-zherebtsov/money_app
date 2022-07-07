@@ -30,6 +30,8 @@ UI
 - [cupertino_icons](https://github.com/flutter/packages/tree/master/third_party/packages/cupertino_icons)
 
 Utils
+- [intl](https://github.com/dart-lang/intl)
+- [logger](https://github.com/leisim/logger)
 - [url_strategy](https://github.com/simpleclub/url_strategy)
 
 Dev Dependencies
@@ -69,7 +71,7 @@ Now, lets dive into the lib directory which has the main code for the applicatio
 2 - domain - Contains abstraction and business logic of project, includes models, responses, request, etc.
 3 - presentation - Contains all the ui of project, contains sub directory for each screen.
 4 - shared - Contains the utilities/common functions, styles of application.
-5 - main.dart - This is the starting point of the application. All the application level configurations are defined in this file i.e, theme, routes, title, orientation etc.
+5 - main.dart - This is the starting point of the application. All the application level configurations are defined in this file i.e, theme, routes, title etc.
 ```
 
 ### Main

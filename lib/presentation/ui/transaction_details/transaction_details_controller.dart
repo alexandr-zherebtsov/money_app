@@ -80,10 +80,10 @@ class TransactionDetailsController extends GetxController {
   }
 
   void repeatingPayment() async {
-    transaction!.repeatingPayment = !(transaction!.repeatingPayment ?? false);
+    final bool res = !(transaction!.repeatingPayment ?? false);
+    transaction!.repeatingPayment = res;
     update();
     await _transactionsRepository.setRepeatingPayment(transaction!);
-    toast(StringsKeys.done.tr);
   }
 
   void getHelp() => toast(StringsKeys.helpIsOnTheWayStayPut.tr);

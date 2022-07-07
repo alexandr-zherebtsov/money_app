@@ -23,6 +23,7 @@ class PayPriceWidget extends StatelessWidget {
                   text: '£',
                   style: Get.textTheme.displayLarge?.copyWith(
                     fontSize: 25,
+                    height: 2.4,
                   ),
                 ),
                 TextSpan(

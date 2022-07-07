@@ -24,6 +24,7 @@ dependencies:
 
   # Utils
   intl: ^0.17.0
+  logger: ^1.1.0
   url_strategy: ^0.2.0
 
 dev_dependencies:

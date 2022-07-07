@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:logger/logger.dart';
 import 'package:money_app/data/local_storage/local_storage.dart';
 import 'package:money_app/data/repositories/account_repository.dart';
 import 'package:money_app/data/repositories/transactions_repository.dart';
@@ -11,12 +12,14 @@ class TransactionsBinding extends Bindings {
   void dependencies() {
     Get.lazyPut<AccountRepository>(
       () => AccountRepositoryImpl(
+        Get.find<Logger>(),
         Get.find<LocalStorage>(),
       ),
       fenix: true,
     );
     Get.lazyPut<TransactionsRepository>(
       () => TransactionsRepositoryImpl(
+        Get.find<Logger>(),
         Get.find<LocalStorage>(),
       ),
       fenix: true,

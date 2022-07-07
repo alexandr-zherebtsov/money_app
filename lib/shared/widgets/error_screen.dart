@@ -30,7 +30,7 @@ class ErrorScreen extends StatelessWidget {
                     Icon(
                       CupertinoIcons.exclamationmark_circle,
                       size: 60,
-                      color: Get.theme.textTheme.bodyText1?.color,
+                      color: Get.theme.textTheme.titleMedium?.color,
                     ),
                     Padding(
                       padding: const EdgeInsets.symmetric(
@@ -38,7 +38,8 @@ class ErrorScreen extends StatelessWidget {
                       ),
                       child: Text(
                         title.tr,
-                        style: Get.theme.textTheme.bodyText1,
+                        textAlign: TextAlign.center,
+                        style: Get.theme.textTheme.titleMedium,
                       ),
                     ),
                   ],
