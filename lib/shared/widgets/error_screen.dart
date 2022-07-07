@@ -1,0 +1,61 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:money_app/shared/core/localization/keys.dart';
+import 'package:money_app/shared/widgets/app_buttons.dart';
+
+class ErrorScreen extends StatelessWidget {
+  final String title;
+  final bool hideBack;
+
+  const ErrorScreen({
+    Key? key,
+    this.title = StringsKeys.somethingWentWrong,
+    this.hideBack = true,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      color: Get.theme.scaffoldBackgroundColor,
+      child: SafeArea(
+        child: Stack(
+          children: [
+            Center(
+              child: Padding(
+                padding: const EdgeInsets.all(16),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Icon(
+                      CupertinoIcons.exclamationmark_circle,
+                      size: 60,
+                      color: Get.theme.textTheme.bodyText1?.color,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                        vertical: 16,
+                      ),
+                      child: Text(
+                        title.tr,
+                        style: Get.theme.textTheme.bodyText1,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            Positioned(
+              top: 8,
+              left: 8,
+              child: Offstage(
+                offstage: hideBack,
+                child: const AppBackButton(),
+              ),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+}

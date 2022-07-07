@@ -1,0 +1,51 @@
+name: money_app
+description: Money application
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.17.5 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  # Core
+  get: ^4.6.5
+
+  # Local storage
+  get_storage: ^2.0.3
+
+  # UI
+  google_fonts: ^3.0.1
+  flutter_svg: ^1.1.1+1
+  overlay_support: ^2.0.1
+  cupertino_icons: ^1.0.5
+
+  # Utils
+  intl: ^0.17.0
+  url_strategy: ^0.2.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  flutter_lints: ^2.0.1
+  flutter_launcher_icons_maker: ^0.10.2
+
+flutter_icons:
+  web: true
+  ios: true
+  macos: true
+  linux: true
+  windows: true
+  android: true
+  remove_alpha_ios: true
+  adaptive_icon_background: '#C0028B'
+  image_path: 'assets/app_icon.png'
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/
+    - assets/svg/

@@ -1,0 +1,4 @@
+enum PayEnums {
+  payTopUp,
+  payWho,
+}
