@@ -70,33 +70,16 @@ class TransactionsRepositoryImpl extends TransactionsRepository {
   }
 
   @override
-  Future<bool> setRepeatingPayment(final TransactionModel v) async {
-    try {
-      final List<TransactionModel> storageRes = await getTransactions();
-      storageRes.removeWhere((e) => e.transactionId == v.transactionId);
-      storageRes.add(v);
-      List<Map<String, dynamic>> res = <Map<String, dynamic>>[];
-      for (int i = 0; i < storageRes.length; i++) {
-        res.add(storageRes[i].toJson());
-      }
-      await _storage.setTransactions(jsonEncode(res));
-      _logger.d(v.toJson());
-      return true;
-    } catch (e) {
-      _logger.d(e);
-      return false;
-    }
-  }
-
-  @override
-  Future<bool> dividePayment({
+  Future<bool> setRepeatingPayment({
     required final TransactionModel v,
+    required final TransactionModel p,
     required final AccountModel a,
   }) async {
     try {
       final List<TransactionModel> storageRes = await getTransactions();
       storageRes.removeWhere((e) => e.transactionId == v.transactionId);
       storageRes.add(v);
+      storageRes.add(p);
       List<Map<String, dynamic>> res = <Map<String, dynamic>>[];
       for (int i = 0; i < storageRes.length; i++) {
         res.add(storageRes[i].toJson());
@@ -106,6 +89,36 @@ class TransactionsRepositoryImpl extends TransactionsRepository {
         _storage.setAccount(jsonEncode(a.toJson())),
       ]);
       _logger.d(v.toJson());
+      _logger.d(p.toJson());
+      _logger.d(a.toJson());
+      return true;
+    } catch (e) {
+      _logger.d(e);
+      return false;
+    }
+  }
+
+  @override
+  Future<bool> splitBill({
+    required final TransactionModel v,
+    required final TransactionModel p,
+    required final AccountModel a,
+  }) async {
+    try {
+      final List<TransactionModel> storageRes = await getTransactions();
+      storageRes.removeWhere((e) => e.transactionId == v.transactionId);
+      storageRes.add(v);
+      storageRes.add(p);
+      List<Map<String, dynamic>> res = <Map<String, dynamic>>[];
+      for (int i = 0; i < storageRes.length; i++) {
+        res.add(storageRes[i].toJson());
+      }
+      await Future.wait([
+        _storage.setTransactions(jsonEncode(res)),
+        _storage.setAccount(jsonEncode(a.toJson())),
+      ]);
+      _logger.d(v.toJson());
+      _logger.d(p.toJson());
       return true;
     } catch (e) {
       _logger.d(e);

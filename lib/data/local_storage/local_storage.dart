@@ -7,15 +7,15 @@ class LocalStorage extends GetxController {
   static const String _account = '_account';
   static const String _transactions = '_transactions';
 
-  Future<void> setAccount(String? v) async => await _setValue(_account, v);
+  Future<void> setAccount(final String? v) async => await _setValue(_account, v);
   Future<String?> getAccount() async => await _getValue(_account);
 
-  Future<void> setTransactions(String? v) async => await _setValue(_transactions, v);
+  Future<void> setTransactions(final String? v) async => await _setValue(_transactions, v);
   Future<String?> getTransactions() async => await _getValue(_transactions);
 
-  Future<T> _getValue<T>(String key) async => await _box.read(key) as T;
+  Future<T> _getValue<T>(final String key) async => await _box.read(key) as T;
 
-  Future<void> _setValue<T>(String key, T v) async => await _box.write(key, v);
+  Future<void> _setValue<T>(final String key, final T v) async => await _box.write(key, v);
 
   Future<void> clearBox() async {
     await Future.wait([

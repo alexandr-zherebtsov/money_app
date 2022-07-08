@@ -82,7 +82,7 @@ String getDateFormat(final int? timestamp, {final bool fullDate = false}) {
   if (timestamp != null) {
     final DateTime date = dateFromMilliseconds(timestamp)!;
     if (fullDate) {
-      return '${dateCheckZero(date.day)}${getMonth(date)} ${date.year} ${getTimeAMPM(date)}';
+      return '${dateCheckZero(date.day)} ${getMonth(date)} ${date.year} ${getTimeAMPM(date)}';
     } else {
       return '${dateCheckZero(date.day)}${getMonth(date)} ${date.year}';
     }

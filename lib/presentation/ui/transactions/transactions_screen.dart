@@ -8,6 +8,7 @@ import 'package:money_app/presentation/ui/transactions/widgets/transaction_item.
 import 'package:money_app/shared/core/localization/keys.dart';
 import 'package:money_app/shared/enums/screen_enums.dart';
 import 'package:money_app/shared/utils/date_utils.dart';
+import 'package:money_app/shared/utils/utils.dart';
 import 'package:money_app/shared/widgets/app_buttons.dart';
 import 'package:money_app/shared/widgets/app_progress.dart';
 import 'package:money_app/shared/widgets/error_screen.dart';
@@ -34,7 +35,7 @@ class TransactionsScreen extends GetView<TransactionsController> {
               actions: [
                 SmallIconButton(
                   onPressed: controller.dropData,
-                  icon: CupertinoIcons.delete,
+                  icon: isApple() ? CupertinoIcons.delete : Icons.delete_outline,
                   color: Get.theme.appBarTheme.titleTextStyle?.color,
                   message: StringsKeys.clear,
                 ),
@@ -59,35 +60,20 @@ class TransactionsScreen extends GetView<TransactionsController> {
             body: controller.transactions.isEmpty ? const ErrorScreen(
               title: StringsKeys.youHaveNoTransactions,
             ) : ResponsiveView(
-              child: SafeArea(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    _buildHeader(),
-                    Expanded(
-                      child: ListView.builder(
-                        padding: EdgeInsets.zero,
-                        itemCount: controller.transactions.length,
-                        itemBuilder: (_, i) {
-                          return Column(
-                            mainAxisSize: MainAxisSize.min,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Offstage(
-                                offstage: _checkDateSeparator(i),
-                                child: _buildDateSeparator(i),
-                              ),
-                              TransactionItem(
-                                item: controller.transactions[i],
-                                onTap: controller.goTransaction,
-                              ),
-                            ],
-                          );
-                        },
-                      ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  _buildHeader(),
+                  Expanded(
+                    child: ListView.builder(
+                      padding: EdgeInsets.zero,
+                      itemCount: controller.transactions.length,
+                      itemBuilder: (_, i) {
+                        return _buildTransactionItem(i);
+                      },
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
           );
@@ -135,7 +121,28 @@ class TransactionsScreen extends GetView<TransactionsController> {
     );
   }
 
-  Widget _buildDateSeparator(int i) {
+  Widget _buildTransactionItem(final int i) {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Offstage(
+          offstage: _checkDateSeparator(i),
+          child: _buildDateSeparator(i),
+        ),
+        TransactionItem(
+          item: controller.transactions[i],
+          onTap: controller.goTransaction,
+        ),
+        _bottomSeparator(
+          i: i,
+          j: controller.transactions.length,
+        ),
+      ],
+    );
+  }
+
+  Widget _buildDateSeparator(final int i) {
     return Padding(
       padding: const EdgeInsets.symmetric(
         vertical: 4,
@@ -148,7 +155,7 @@ class TransactionsScreen extends GetView<TransactionsController> {
     );
   }
 
-  bool _checkDateSeparator(int i) {
+  bool _checkDateSeparator(final int i) {
     bool hideDate = false;
     if (i != controller.transactions.length && i != 0 && controller.transactions.isNotEmpty) {
       if (isTheSameDay(
@@ -159,5 +166,19 @@ class TransactionsScreen extends GetView<TransactionsController> {
       }
     }
     return hideDate;
+  }
+
+  Widget _bottomSeparator({
+    required final int i,
+    required final int j,
+  }) {
+    return Offstage(
+      offstage: i + 1 != j,
+      child: const SafeArea(
+        child: SizedBox(
+          height: 8,
+        ),
+      ),
+    );
   }
 }

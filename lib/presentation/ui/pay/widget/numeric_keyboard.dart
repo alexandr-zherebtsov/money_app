@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:money_app/shared/styles/colors.dart';
+import 'package:money_app/shared/utils/utils.dart';
 
 class NumericKeyboard extends StatelessWidget {
   final RxString value;
@@ -72,7 +73,7 @@ class NumericKeyboard extends StatelessWidget {
         height: size,
         child: Center(
           child: Icon(
-            CupertinoIcons.back,
+            isApple() ? CupertinoIcons.back : Icons.arrow_back_ios_new,
             color: Get.textTheme.displayLarge?.color,
             size: 34,
           ),

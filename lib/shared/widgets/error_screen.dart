@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:money_app/shared/core/localization/keys.dart';
+import 'package:money_app/shared/utils/utils.dart';
 import 'package:money_app/shared/widgets/app_buttons.dart';
 
 class ErrorScreen extends StatelessWidget {
@@ -28,7 +29,7 @@ class ErrorScreen extends StatelessWidget {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Icon(
-                      CupertinoIcons.exclamationmark_circle,
+                      isApple() ? CupertinoIcons.exclamationmark_circle : Icons.error_outline,
                       size: 60,
                       color: Get.theme.textTheme.titleMedium?.color,
                     ),

@@ -11,10 +11,15 @@ abstract class TransactionsRepository {
     required final AccountModel a,
   });
 
-  Future<bool> setRepeatingPayment(final TransactionModel v);
-
-  Future<bool> dividePayment({
+  Future<bool> setRepeatingPayment({
     required final TransactionModel v,
+    required final TransactionModel p,
+    required final AccountModel a,
+  });
+
+  Future<bool> splitBill({
+    required final TransactionModel v,
+    required final TransactionModel p,
     required final AccountModel a,
   });
 }
