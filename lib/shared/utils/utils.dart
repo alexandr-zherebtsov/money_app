@@ -23,10 +23,10 @@ String priceParser(final double? v) {
         return price;
       }
     } else {
-      return '';
+      return '0.00';
     }
   } catch (_) {
-    return '';
+    return '0.00';
   }
 }
 

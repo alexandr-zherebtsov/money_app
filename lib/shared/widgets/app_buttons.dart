@@ -91,7 +91,7 @@ class AppCancelButton extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Icon(
-            Icons.cancel,
+            isApple() ? CupertinoIcons.clear_thick_circled : Icons.cancel,
             color: color,
           ),
         ),
